@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI ক্যালকুলেটর</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>BMI ক্যালকুলেটর</h2>
+    
+    <h3>lets check your BMI level.</h3>
+    <label>ওজন (KG):</label>
+    <input type="number" id="weight" placeholder="আপনার ওজন লিখুন">
+    
+    <label>উচ্চতা (ইঞ্চি):</label>
+    <input type="number" id="height" placeholder="আপনার উচ্চতা লিখুন">
+    
+    <button onclick="calculateBMI()">BMI হিসাব করুন</button>
+    
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+function calculateBMI() {
+    let weight = parseFloat(document.getElementById("weight").value);
+    let height = parseFloat(document.getElementById("height").value);
+    let resultDiv = document.getElementById("result");
+
+    if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+        resultDiv.innerHTML = "সঠিক তথ্য দিন!";
+        resultDiv.style.color = "red";
+        return;
+    }
+
+    // প্রথমে "calculating" মেসেজ দেখানো হবে
+    resultDiv.innerHTML = "Iftee is calculating your BMI...(replying)";
+    resultDiv.style.color = "black";
+
+    // ৩ সেকেন্ড পর আসল রেজাল্ট দেখাবে
+    setTimeout(() => {
+        let h2 = height * 0.0254;
+        let bmi = weight / (h2 * h2);
+        let message = "";
+        let messageColor = "";
+
+        if (bmi < 18.5) {
+            message = "আপনার ওজন অনেক কম। ওজন বাড়ানো জরুরি।";
+            messageColor = "orange";
+        } else if (bmi <= 24.9) {
+            message = "আপনি ফিট আছেন।";
+            messageColor = "blue";
+        } else if (bmi <= 29.9) {
+            message = "আপনার ওজন অতিরিক্ত। ব্যায়াম করে ওজন কমান।";
+            messageColor = "purple";
+        } else if (bmi <= 34.9) {
+            message = "আপনি স্থূলতার প্রথম স্তরে আছেন। সঠিক খাবার ও ব্যায়াম প্রয়োজন।";
+            messageColor = "brown";
+        } else if (bmi <= 39.9) {
+            message = "আপনি স্থূলতার দ্বিতীয় স্তরে আছেন। সিরিয়াস হন।";
+            messageColor = "red";
+        } else {
+            message = "কিছু বলার নেই 😑 মরতে না চাইলে ডাক্তার দেখান।";
+            messageColor = "darkred";
+        }
+
+        resultDiv.innerHTML = `<span style="color: green; font-weight: bold;">আপনার BMI:</span> 
+                               <span style="color: navy; font-weight: bold;">${bmi.toFixed(2)}</span><br> 
+                               <span style="color: ${messageColor};">${message}</span>`;
+    }, 3000);
+}
+
+
+
+</script>
+
+</body>
+</html>
+
+
